@@ -3,7 +3,7 @@ executors:
   python-executor:
     docker:
       - image: cimg/python:3.8
-projectRoot: $(System.DefaultWorkingDirectory)
+
 jobs:
   build:
     working_directory: ~/circleci-python
@@ -11,36 +11,25 @@ jobs:
     steps:
       - checkout  # Checkout your source code
       - run:
-          name: Install Python deps in a venv
-          command: |
-            python -m venv antenv
-            source antenv/bin/activate
-            python -m pip install --upgrade pip
-            pip install setup
-            pip install pytest
-            pwd
-            pip install -r requirements.txt
+          name: Install dependencies
+          command: pip install -r requirements.txt
       - run: 
           name: Script
           command: pwd
       - run:
           name: Start Flask server
           background: true
-          command: python3 app.py
+          command:
+            pwd
+            python3 app.py
   test:
     working_directory: ~/circleci-python
     docker:
       - image: "circleci/python:3.8"
     steps:
       - checkout
-      - run:
-          name: Test Cases
-          command:  |
-            python -m venv antenv
-            source antenv/bin/activate
-            set -e
-            pytest -v tests/calculator_test.py
-                       
+      - run: pytest calculator_test.py
+            
 workflows:
   build_and_test:
     jobs:
