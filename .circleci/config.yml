@@ -13,6 +13,9 @@ jobs:
       - run:
           name: Install dependencies
           command: pip install -r requirements.txt
+      - run: 
+          name: Script
+          command: pwd
       - run:
           name: Run tests
           command: python3 calculator_test.py  # You can replace this with your testing command
