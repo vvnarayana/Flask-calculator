@@ -1,22 +1,17 @@
 version: 2.1
 executors:
   python-executor:
-    working_directory: ~/circleci-python
     docker:
       - image: circleci/python:3.8
 
 jobs:
   build:
-    working_directory: ~/circleci-python
     executor: python-executor
     steps:
       - checkout  # Checkout your source code
       - run:
           name: Install dependencies
           command: pip install -r requirements.txt
-      - run:
-          name: List directory contents
-          command: ls -l
       - run:
           name: Run tests
           command: python3 calculator_test.py  # You can replace this with your testing command
