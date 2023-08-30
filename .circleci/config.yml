@@ -17,13 +17,13 @@ jobs:
           name: Script
           command: pwd
       - run:
-          name: Run tests
-          command: python3 calculator_test.py  # You can replace this with your testing command
-      - run:
           name: Start Flask server
           background: true
           command: python3 app.py
-
+      - run:
+          name: Run tests
+          command: python3 calculator_test.py  # You can replace this with your testing command
+      
 workflows:
   version: 2
   build-deploy:
