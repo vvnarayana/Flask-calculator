@@ -1,25 +1,29 @@
 version: 2.1
+executors:
+  python-executor:
+    working_directory: ~/circleci-python
+    docker:
+      - image: circleci/python:3.8
 
 jobs:
   build:
     working_directory: ~/circleci-python
-    docker:
-      - image: "circleci/python:3.7"
+    executor: python-executor
     steps:
-      - checkout
-      - run: python3 app.py
-  test:
-    working_directory: ~/circleci-python
-    docker:
-      - image: "circleci/python:3.7"
-    steps:
-      - checkout
-      - run: python3 calculator_test.py
+      - checkout  # Checkout your source code
+      - run:
+          name: Install dependencies
+          command: pip install -r requirements.txt
+      - run:
+          name: Run tests
+          command: python3 calculator_test.py  # You can replace this with your testing command
+      - run:
+          name: Start Flask server
+          background: true
+          command: python3 app.py
 
 workflows:
-  build_and_test:
+  version: 2
+  build-deploy:
     jobs:
       - build
-      - test:
-          requires:
-            - build
