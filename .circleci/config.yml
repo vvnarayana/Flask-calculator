@@ -21,7 +21,7 @@ jobs:
           background: true
           command: python3 app.py
   test:
-    working_directory: ~/circleci-python
+    working_directory: ~/circleci-python/tests
     docker:
       - image: "circleci/python:3.8"
     steps:
