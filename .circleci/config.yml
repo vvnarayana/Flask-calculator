@@ -21,8 +21,8 @@ jobs:
           background: true
           command: python3 app.py
       - run:
-          name: Run tests
-          command: pytest calculator_test.py  # You can replace this with your testing command
+          name: Test cases
+          command: pytest calculator_test.py
             
 workflows:
   version: 2
