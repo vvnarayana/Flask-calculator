@@ -20,6 +20,9 @@ jobs:
           name: Start Flask server
           background: true
           command: python3 app.py
+      - run:
+          name: Run tests
+          command: pytest calculator_test.py  # You can replace this with your testing command
             
 workflows:
   version: 2
