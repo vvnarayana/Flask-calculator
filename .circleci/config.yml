@@ -13,13 +13,13 @@ jobs:
       - run:
           name: Install dependencies
           command: pip install -r requirements.txt
-      - run: 
-          name: Script
-          command: pwd
+            pwd
       - run:
           name: Start Flask server
           background: true
-          command: python3 app.py
+          command:
+            pwd
+            python3 app.py
       - run:
           name: Test cases
           command: pytest calculator_test.py
