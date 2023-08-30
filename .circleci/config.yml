@@ -13,19 +13,27 @@ jobs:
       - run:
           name: Install dependencies
           command: pip install -r requirements.txt
-            pwd
+      - run: 
+          name: Script
+          command: pwd
       - run:
           name: Start Flask server
           background: true
           command:
             pwd
             python3 app.py
-      - run:
-          name: Test cases
-          command: pytest calculator_test.py
+  test:
+    working_directory: ~/circleci-python
+    docker:
+      - image: "circleci/python:3.8"
+    steps:
+      - checkout
+      - run: pytest calculator_test.py
             
 workflows:
-  version: 2
-  build-deploy:
+  build_and_test:
     jobs:
       - build
+      - test:
+          requires:
+            - build
