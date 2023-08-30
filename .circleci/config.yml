@@ -6,7 +6,7 @@ executors:
 projectRoot: $(System.DefaultWorkingDirectory)
 jobs:
   build:
-    working_directory: $(projectRoot)
+    working_directory: ~/circleci-python
     executor: python-executor
     steps:
       - checkout  # Checkout your source code
@@ -28,7 +28,7 @@ jobs:
           background: true
           command: python3 app.py
   test:
-    working_directory: $(projectRoot)
+    working_directory: ~/circleci-python
     docker:
       - image: "circleci/python:3.8"
     steps:
