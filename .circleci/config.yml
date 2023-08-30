@@ -19,9 +19,7 @@ jobs:
       - run:
           name: Start Flask server
           background: true
-          command:
-            pwd
-            python3 app.py
+          command: python3 app.py
   test:
     working_directory: ~/circleci-python
     docker:
