@@ -15,7 +15,7 @@ jobs:
           command: pip install -r requirements.txt
       - run: 
           name: Script
-          command: pwd
+          command: python3 --version
       - run:
           name: Start Flask server
           background: true
