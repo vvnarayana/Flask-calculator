@@ -1,8 +1,22 @@
 version: 2.1
 orbs:
-  jira: circleci/jira@2.0.1
   python: circleci/python@2.1.1
 jobs:
+  build:
+    working_directory: ~/circleci-python
+    executor: python-executor
+    steps:
+      - checkout  # Checkout your source code
+      - run:
+          name: Install dependencies
+          command: pip install -r requirements.txt
+      - run: 
+          name: Script
+          command: python3 --version
+      - run:
+          name: Start Flask server
+          background: true
+          command: python3 app.py
   run_tests:
     working_directory: ~/python-app-calculator
     docker:
@@ -14,17 +28,7 @@ jobs:
       - run: 
            name: Run test
            command: pytest
-      - jira/notify:
-          debug: false 
-          environment: development
-          environment_type: development 
-          ignore_errors: true 
-          job_type: build 
-          oidc_token: '796785c9-293e-482c-842b-bee6cb4190f5' 
-          pipeline_id: Flask-calculator 
-          pipeline_number: 1
 workflows:
   build_and_test:
     jobs:
-      - run_tests:
-          context: https://128227a1-b1f0-4c2b-b7b6-1b32a1afee83.hello.atlassian-dev.net/x1/CH7qZD3fb3GhHwT0o0pXUc0gBhs
+      - run_tests
