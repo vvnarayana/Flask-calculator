@@ -1,37 +1,19 @@
 version: 2.1
-executors:
-  python-executor:
-    docker:
-      - image: cimg/python:3.8
-
+orbs:
+  python: circleci/python@2.1.1
 jobs:
-  build:
-    working_directory: ~/circleci-python
-    executor: python-executor
-    steps:
-      - checkout  # Checkout your source code
-      - run:
-          name: Install dependencies
-          command: pip install -r requirements.txt
-      - run: 
-          name: Script
-          command: python3 --version
-      - run:
-          name: Start Flask server
-          background: true
-          command: python3 app.py
-  test:
-    working_directory: ~/circleci-python
+  run_tests:
+    working_directory: ~/python-app-calculator
     docker:
-      - image: "circleci/python:3.8"
+      - image: "cimg/python:3.8.4"
     steps:
       - checkout
-      - run: python3 tests/calculator_test.py
-            
+      - python/install-packages:
+          pkg-manager: pip
+      - run: 
+           name: Run test
+           command: pytest
 workflows:
   build_and_test:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
+      - run_tests
