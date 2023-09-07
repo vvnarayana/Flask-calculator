@@ -15,8 +15,14 @@ jobs:
            name: Run test
            command: pytest
       - jira/notify:
-          pipeline_id: << pipeline.id >>
-          pipeline_number: << pipeline.number >>
+          debug: false 
+          environment: development
+          environment_type: development 
+          ignore_errors: true 
+          job_type: build 
+          oidc_token: '796785c9-293e-482c-842b-bee6cb4190f5' 
+          pipeline_id: Flask-calculator 
+          pipeline_number: 1
 workflows:
   build_and_test:
     jobs:
