@@ -2,11 +2,14 @@ version: 2.1
 executors:
   python-executor:
     docker:
-      - image: cimg/python:3.8
-
+      - image: circleci/python:3.8.4
+orbs:
+  jira: circleci/jira@2.0.1
+  python: circleci/python@2.1.1
+  
 jobs:
-  build:
-    working_directory: ~/circleci-python
+  builds:
+    working_directory: ~/Flask-calculator
     executor: python-executor
     steps:
       - checkout  # Checkout your source code
@@ -20,18 +23,40 @@ jobs:
           name: Start Flask server
           background: true
           command: python3 app.py
-  test:
-    working_directory: ~/circleci-python
+      - jira/notify:
+          debug: false 
+          environment: development
+          environment_type: development 
+          ignore_errors: true 
+          job_type: build 
+          oidc_token: '796785c9-293e-482c-842b-bee6cb4190f5' 
+          pipeline_id: Flask-calculator 
+          pipeline_number: 1
+              
+  run_tests:
+    working_directory: ~/python-app-calculator
     docker:
-      - image: "circleci/python:3.8"
+      - image: "cimg/python:3.8.4"
     steps:
       - checkout
-      - run: python3 tests/calculator_test.py
-            
+      - python/install-packages:
+          pkg-manager: pip
+      - run: 
+           name: Run test
+           command: pytest
+      - jira/notify:
+          debug: false 
+          environment: development
+          environment_type: development 
+          ignore_errors: true 
+          job_type: build 
+          oidc_token: '796785c9-293e-482c-842b-bee6cb4190f5' 
+          pipeline_id: Flask-calculator 
+          pipeline_number: 1
 workflows:
   build_and_test:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
+      - builds:
+          context: JIRA_WEBHOOK_URL
+      - run_tests:
+          context: JIRA_WEBHOOK_URL
