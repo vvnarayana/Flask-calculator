@@ -1,5 +1,6 @@
 version: 2.1
 orbs:
+  jira: circleci/jira@2.0.1
   python: circleci/python@2.1.1
 jobs:
   run_tests:
@@ -13,7 +14,11 @@ jobs:
       - run: 
            name: Run test
            command: pytest
+      - jira/notify:
+          pipeline_id: << pipeline.id >>
+          pipeline_number: << pipeline.number >>
 workflows:
   build_and_test:
     jobs:
-      - run_tests
+      - run_tests:
+          context: https://128227a1-b1f0-4c2b-b7b6-1b32a1afee83.hello.atlassian-dev.net/x1/CH7qZD3fb3GhHwT0o0pXUc0gBhs
