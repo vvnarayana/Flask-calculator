@@ -26,17 +26,19 @@ jobs:
       - run: 
           name: Script
           command: pwd
-          
+
       - run:
           name: Build Artifact
           command: |
             mkdir -p artifacts
             cp -r src/ artifacts/
+            cd artifacts
+            zip -r Flask-calculator.zip
 
       - persist_to_workspace:
           root: .
           paths:
-            - artifacts/
+            - artifacts/Flask-calculator.zip
 
       - jira/notify:
           debug: false 
