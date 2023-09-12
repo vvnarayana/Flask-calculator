@@ -24,7 +24,7 @@ jobs:
           background: true
           command: python3 app.py
       - jira/notify:
-          debug: false 
+          debug: true 
           environment: development
           environment_type: development 
           ignore_errors: true 
