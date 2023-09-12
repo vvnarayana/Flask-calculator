@@ -31,10 +31,8 @@ jobs:
           name: Build Artifact
           command: |
             mkdir -p artifacts
-            cp -r /home/circleci/Flask-calculator/ artifacts/
-            cd artifacts
-            zip -r Flask-calculator.zip
-
+            pwd
+            
       - persist_to_workspace:
           root: .
           paths:
