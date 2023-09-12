@@ -64,13 +64,7 @@ jobs:
       - run: 
            name: Run test
            command: pytest
-      - run:
-          name: Check Test Results and Fail Pipeline on Failure
-          command: |
-            if [ $? -ne 0 ]; then
-              echo "Tests failed. Failing the pipeline."
-              circleci step halt
-            fi
+      
                     
       - jira/notify:
           debug: false 
