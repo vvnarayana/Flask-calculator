@@ -37,6 +37,10 @@ jobs:
             zip -r Flask-calculator.zip /home/circleci/artifacts/Flask-calculator/*
             cd /home/circleci/artifacts
             ls -la
+      - persist_to_workspace:
+          root: /home/circleci
+          paths:
+            - artifacts/Flask-calculator.zip
            
       - jira/notify:
           debug: false 
