@@ -6,7 +6,7 @@ executors:
 orbs:
   jira: circleci/jira@2.0.1
   python: circleci/python@2.1.1
-  
+ 
 jobs:
   builds:
     working_directory: ~/Flask-calculator
@@ -23,6 +23,21 @@ jobs:
           name: Start Flask server
           background: true
           command: python3 app.py
+      - run: 
+          name: Script
+          command: pwd
+          
+      - run:
+          name: Build Artifact
+          command: |
+            mkdir -p artifacts
+            cp -r src/ artifacts/
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - artifacts/
+
       - jira/notify:
           debug: false 
           environment: development
