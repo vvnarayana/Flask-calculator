@@ -64,6 +64,15 @@ jobs:
       - run: 
            name: Run test
            command: pytest
+      - run:
+          name: Check test results
+          command: |
+            if pytest --exitfirst --failed-first --strict; then
+              echo "All tests passed"
+            else
+              echo "Some tests failed"
+              exit 1  # Exit with a non-zero code to fail the build
+              
       - jira/notify:
           debug: false 
           environment: development
