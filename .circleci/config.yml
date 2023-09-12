@@ -2,7 +2,7 @@ version: 2.1
 executors:
   python-executor:
     docker:
-      - image: circleci/python:3.8.4
+      - image: cimg/python:3.8.4
 orbs:
   jira: circleci/jira@2.0.1
   python: circleci/python@2.1.1
@@ -31,8 +31,8 @@ jobs:
           name: Build Artifact
           command: |
             mkdir -p artifacts
-            pwd
-            
+            ls -la
+                        
       - persist_to_workspace:
           root: .
           paths:
