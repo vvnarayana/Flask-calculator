@@ -65,14 +65,13 @@ jobs:
            name: Run test
            command: pytest
       - run:
-          name: Check test results
+          name: Check Test Results and Fail Pipeline on Failure
           command: |
-            if pytest --exitfirst --failed-first --strict; then
-              echo "All tests passed"
-            else
-              echo "Some tests failed"
-              exit 1  # Exit with a non-zero code to fail the build
-              
+            if [ $? -ne 0 ]; then
+              echo "Tests failed. Failing the pipeline."
+              circleci step halt
+            fi
+                    
       - jira/notify:
           debug: false 
           environment: development
