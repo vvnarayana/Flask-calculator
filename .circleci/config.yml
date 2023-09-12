@@ -34,7 +34,6 @@ jobs:
             mkdir -p artifacts
             cp -r /home/circleci/Flask-calculator /home/circleci/artifacts
             cd /home/circleci/artifacts
-            ls -la
             zip -r Flask-calculator.zip /home/circleci/artifacts/Flask-calculator/*
             cd /home/circleci/artifacts
             ls -la
@@ -43,7 +42,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - artifacts/Flask-calculator.zip
+            - /home/circleci/artifacts/Flask-calculator.zip
 
       - jira/notify:
           debug: false 
