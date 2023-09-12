@@ -30,9 +30,12 @@ jobs:
       - run:
           name: Build Artifact
           command: |
+            cd /home/circleci/
             mkdir -p artifacts
-            ls -la
-                        
+            cp -r /home/circleci/Flask-calculator /home/circleci/artifacts
+            cd /home/circleci/artifacts
+            zip -r Flask-calculator.zip 
+            
       - persist_to_workspace:
           root: .
           paths:
