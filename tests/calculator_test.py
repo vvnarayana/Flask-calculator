@@ -11,7 +11,7 @@ def test_main_page(client):
     assert b"Calculator App" in response.data
 
 def test_addition(client):
-    response = client.post("/calculate", data={"number_one": "5", "number_two": "3", "operation": "add"})
+    response = client.post("/calculate", data={"number_one": "5", "number_two": "4", "operation": "add"})
     assert b"8.0" in response.data
 
 def test_subtraction(client):
