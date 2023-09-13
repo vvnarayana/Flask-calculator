@@ -4,8 +4,7 @@ executors:
     docker:
       - image: cimg/python:3.8.4
 orbs:
-  jira: circleci/jira@2.0.1
-  python: circleci/python@2.1.1
+    python: circleci/python@2.1.1
  
 jobs:
   builds:
@@ -41,39 +40,20 @@ jobs:
       - persist_to_workspace:
           root: /home/circleci
           paths:
-            - artifacts/Flask-calculator.zip
-           
-      - jira/notify:
-          debug: false 
-          environment: development
-          environment_type: development 
-          ignore_errors: true 
-          job_type: build 
-          oidc_token: '796785c9-293e-482c-842b-bee6cb4190f5' 
-          pipeline_id: Flask-calculator 
-          pipeline_number: 1
-              
+            - artifacts/Flask-calculator.zip     
+                    
   run_tests:
     working_directory: ~/python-app-calculator
     docker:
       - image: "cimg/python:3.8.4"
-    steps:
-      - checkout
-      - python/install-packages:
-          pkg-manager: pip
+    steps: 
+      - checkout 
+      - python/install-packages: 
+          pkg-manager: pip 
       - run: 
            name: Run test
-           command: pytest
-                         
-      - jira/notify:
-          debug: false 
-          environment: development
-          environment_type: development 
-          ignore_errors: true 
-          job_type: build 
-          oidc_token: '796785c9-293e-482c-842b-bee6cb4190f5' 
-          pipeline_id: Flask-calculator 
-          pipeline_number: 1
+           command: pytest                
+      
 workflows:
   build_and_test:
     jobs:
