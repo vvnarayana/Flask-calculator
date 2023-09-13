@@ -57,7 +57,6 @@ jobs:
 workflows:
   build_and_test:
     jobs:
-      - builds:
-          context: JIRA_WEBHOOK_URL
-      - run_tests:
-          context: JIRA_WEBHOOK_URL
+      - builds
+      - run_tests
+          
