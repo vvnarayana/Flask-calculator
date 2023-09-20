@@ -5,7 +5,7 @@ executors:
       - image: circleci/python:3.8.4
 orbs:
   jira: circleci/jira@2.0.1
-  python: circleci/python@2.0.1
+  python: circleci/python@2.1.1
   
 jobs:
   builds:
@@ -45,6 +45,6 @@ workflows:
   build_and_test:
     jobs:
       - builds:
-          context: JIRA_WEBHOOK_URL
+          context: Jira 
       - run_tests:
-          context: JIRA_WEBHOOK_URL
+          context: Jira
