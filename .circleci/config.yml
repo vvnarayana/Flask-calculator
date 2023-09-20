@@ -24,14 +24,8 @@ jobs:
           background: true
           command: python3 app.py
       - jira/notify:
-          debug: true 
-          environment: development
-          environment_type: development 
-          ignore_errors: true 
-          job_type: build 
-          oidc_token: '796785c9-293e-482c-842b-bee6cb4190f5' 
-          pipeline_id: Flask-calculator 
-          pipeline_number: 1
+          pipeline_id: << pipeline.id >>
+          pipeline_number: << pipeline.number >>
               
   run_tests:
     working_directory: ~/python-app-calculator
@@ -45,14 +39,8 @@ jobs:
            name: Run test
            command: pytest
       - jira/notify:
-          debug: false 
-          environment: development
-          environment_type: development 
-          ignore_errors: true 
-          job_type: build 
-          oidc_token: '796785c9-293e-482c-842b-bee6cb4190f5' 
-          pipeline_id: Flask-calculator 
-          pipeline_number: 1
+          pipeline_id: << pipeline.id >>
+          pipeline_number: << pipeline.number >>
 workflows:
   build_and_test:
     jobs:
