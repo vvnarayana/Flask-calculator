@@ -4,7 +4,7 @@ orbs:
   jira: circleci/jira@2.0.1
 jobs:
   run_tests:
-    working_directory: ~/python-app-calculator
+    working_directory: ~/Flask-calculator
     docker:
       - image: "cimg/python:3.8.4"
     steps:
