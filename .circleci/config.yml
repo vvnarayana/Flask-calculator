@@ -5,7 +5,7 @@ executors:
       - image: circleci/python:3.8.4
 orbs:
   jira: circleci/jira@2.0.1
-  python: circleci/python@2.1.1
+  python: circleci/python@2.0.1
   
 jobs:
   builds:
