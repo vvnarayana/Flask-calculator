@@ -4,6 +4,7 @@ executors:
     docker:
       - image: cimg/python:3.8.4
 orbs:
+    jira: circleci/jira@2.0.1
     python: circleci/python@2.1.1
  
 jobs:
@@ -41,9 +42,16 @@ jobs:
           root: /home/circleci
           paths:
             - artifacts/Flask-calculator.zip     
-                    
+
+      - jira/notify:
+            environment: staging
+            environment_type: staging
+            job_type: deployment
+            pipeline_number: <<pipeline.number>>
+            pipeline_id: <<pipeline.id>>
+
   run_tests:
-    working_directory: ~/python-app-calculator
+    working_directory: ~/Flask-calculator
     docker:
       - image: "cimg/python:3.8.4"
     steps: 
@@ -52,11 +60,33 @@ jobs:
           pkg-manager: pip 
       - run: 
            name: Run test
-           command: pytest                
-      
+           command: pytest
+      - jira/notify:
+            environment: staging
+            environment_type: staging
+            pipeline_number: <<pipeline.number>>
+            pipeline_id: <<pipeline.id>>     
+
+  deploy:
+    docker:
+      - image: circleci/node:14
+    steps:
+      - checkout
+      - run:
+          name: Install Azure CLI
+          command: |
+            curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+      - run:
+          name: Deploy to Azure App Service
+          command: |
+            az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+            az webapp deployment source config-zip -g DevOpsDemo -n CircleCI --src /home/circleci/artifacts/Flask-calculator.zip
+
 workflows:
   build_and_test:
     jobs:
-      - builds
-      - run_tests
+      - builds:
+          context: webhook_url
+      - run_tests:
+          context: webhook_url
           
