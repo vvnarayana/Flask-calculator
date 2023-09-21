@@ -56,13 +56,16 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/node:14
+      - image: circleci/node:16
     steps:
       - checkout
       - run:
           name: Environment
           command: |
             cat /etc/os-release
+            sudo sed -i 's/stretch/buster/g' /etc/apt/sources.list
+            sudo apt-get update
+
       - run:
           name: Install Azure CLI
           command: |
