@@ -70,6 +70,11 @@ jobs:
           name: Install Azure CLI
           command: |
             curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+      - run:
+          name: List Workspace Contents
+          command: ls -R $HOME/project
+
       - run:
           name: Deploy to Azure App Service
           command: |
@@ -77,7 +82,7 @@ jobs:
             az webapp deployment source config-zip -g DevOpsDemo -n CircleCI --src /home/circleci/artifacts/
 
 workflows:
-  build_and_test:
+  build_and_test_deploy:
     jobs:
       - builds
       - run_tests
