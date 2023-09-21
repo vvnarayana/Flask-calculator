@@ -74,4 +74,5 @@ workflows:
     jobs:
       - builds
       - run_tests
+      - deploy
           
