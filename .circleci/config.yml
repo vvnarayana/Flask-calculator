@@ -22,8 +22,8 @@ jobs:
             chmod 777 build.sh
             ls -la
             ./build.sh
-            cd antenv
             pwd
+            cd /home/circleci/Flask-calculator/antenv
             ls -la     
       - run: 
           name: Python Version
