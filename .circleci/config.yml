@@ -39,14 +39,24 @@ jobs:
             chmod 777 artifact.sh
             ls -la
             ./artifact.sh
-            
+      - run:
+          name: Install Azure CLI
+          command: |
+            curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+      - run:
+          name: Deploy to Azure App Service
+          command: az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+      - run:
+          name: Deploy to Azure App Service
+          command: az account set --subscription $AZURE_SUBSCRIPTION_ID
+                     
       - run: 
           name: Artifact Moving
           command: |
             chmod -R 777 /home/circleci/*
             ls -lrth /home/circleci
-            cd /home/circleci/artifacts
-            cp Flask-calculator.zip /home/circleci/project
+            cp /home/circleci/artifactsFlask-calculator.zip /home/circleci/project
             ls -lrth /home/circleci/project
       - persist_to_workspace:
           root: /home/circleci
@@ -78,30 +88,15 @@ jobs:
             sudo sed -i 's/stretch/buster/g' /etc/apt/sources.list
             sudo apt-get update
 
-      - run:
-          name: Install Azure CLI
-          command: |
-            curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
-      - run:
-          name: Deploy to Azure App Service
-          command: az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
-      - run:
-          name: Deploy to Azure App Service
-          command: az account set --subscription $AZURE_SUBSCRIPTION_ID
       - run: 
           name: Test
           command: |
-            cd /home/circleci
-            ls -lrth
+            ls -lrth /home/circleci
       - run:
           name: Deploy to Azure App Service
           command: az webapp deployment source config-zip -g DevOpsDemo -n CircleCI --src $HOME/Flask-calculator.zip
-      - persist_to_workspace:
-          root: /home/circleci
-          paths:
-            - artifacts/Flask-calculator.zip 
-          
+
 workflows:
   build_and_test_deploy:
     jobs:
