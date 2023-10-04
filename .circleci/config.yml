@@ -73,10 +73,6 @@ jobs:
             curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
       - run:
-          name: List Workspace Contents
-          command: ls -R $HOME/artifacts
-
-      - run:
           name: Deploy to Azure App Service
           command: |
             az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
