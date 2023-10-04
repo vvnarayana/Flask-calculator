@@ -19,6 +19,7 @@ jobs:
           name: Executing Script
           command: |
             pwd
+            chmod 777 build.sh
             ls -la
             ./build.sh       
       - run: 
