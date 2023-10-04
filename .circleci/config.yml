@@ -29,21 +29,14 @@ jobs:
           name: Python Version
           command: python3 --version
       - run:
-          name: Start Flask server
-          background: true
-          command: python3 app.py
-      - run: 
-          name: Checking Directory
-          command: pwd
-
-      - run:
           name: Build Artifact and Archiving
           command: |
             cd /home/circleci/
             mkdir -p artifacts
-            cp -r /home/circleci/Flask-calculator /home/circleci/artifacts
+            pwd
+            cp -r /home/circleci/Flask-calculator/* /home/circleci/artifacts
             cd /home/circleci/artifacts
-            zip -r Flask-calculator.zip /home/circleci/artifacts/Flask-calculator/*
+            zip -r Flask-calculator.zip /home/circleci/artifacts/*
             cd /home/circleci/artifacts
             ls -la
 
