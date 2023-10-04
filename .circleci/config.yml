@@ -19,6 +19,7 @@ jobs:
           name: Executing Script
           command: |
             pwd
+            ls -la
             ./build.sh       
       - run: 
           name: Python Version
