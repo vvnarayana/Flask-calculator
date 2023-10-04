@@ -74,7 +74,7 @@ jobs:
 
       - run:
           name: List Workspace Contents
-          command: ls -R $HOME/artifact
+          command: ls -R $HOME/artifacts
 
       - run:
           name: Deploy to Azure App Service
