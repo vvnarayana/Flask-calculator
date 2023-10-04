@@ -16,7 +16,7 @@ jobs:
           name: Install dependencies
           command: pip install -r requirements.txt   
       - run:
-          name: Executing Script
+          name: Build Script
           command: |
             pwd
             chmod 777 build.sh
@@ -29,14 +29,14 @@ jobs:
           name: Python Version
           command: python3 --version
       - run:
-          name: Build Artifact and Archiving
+          name: Artifact Archiving
           command: |
             cd /home/circleci/
             mkdir -p artifacts
             pwd
-            cp -r /home/circleci/Flask-calculator/* /home/circleci/artifacts
+            cp -r /home/circleci/Flask-calculator /home/circleci/artifacts
             cd /home/circleci/artifacts
-            zip -r Flask-calculator.zip /home/circleci/artifacts/*
+            zip -r Flask-calculator.zip /home/circleci/artifacts/Flask-calculator/*
             cd /home/circleci/artifacts
             ls -la
 
