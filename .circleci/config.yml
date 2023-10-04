@@ -41,7 +41,13 @@ jobs:
             ./artifact.sh
             pwd
             ls -la
-
+      - run: 
+          name: Artifact Moving
+          command: |
+            ls -lrth /home/circleci
+            cd /home/circleci/artifacts
+            cp Flask-calculator.zip /home/circleci/projects
+            ls -lrth /home/circleci/projects
       - persist_to_workspace:
           root: /home/circleci
           paths:
