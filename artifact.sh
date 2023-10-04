@@ -1,4 +1,4 @@
-#!/bin/bash/
+#!/bin/bash
 cd /home/circleci/
 mkdir -p artifacts
 pwd
