@@ -74,13 +74,14 @@ jobs:
 
       - run:
           name: List Workspace Contents
-          command: ls -R $HOME/project
+          command: ls -R $HOME/Flask-calculator
 
       - run:
           name: Deploy to Azure App Service
           command: |
             az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
-            az webapp deployment source config-zip -g DevOpsDemo -n CircleCI --src /home/circleci/artifacts/Flask-calculator.zip
+            az account set --subscription $AZURE_SUBSCRIPTION_ID
+            az webapp deployment source config-zip -g DevOpsDemo -n CircleCI --src Flask-calculator.zip
             
 workflows:
   build_and_test_deploy:
