@@ -55,6 +55,7 @@ jobs:
            command: pytest   
 
   deploy:
+    working_directory: ~/Flask-calculator
     docker:
       - image: circleci/node:16
     steps:
