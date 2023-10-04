@@ -57,7 +57,7 @@ jobs:
   deploy:
     working_directory: ~/Flask-calculator
     docker:
-      - image: circleci/node:16
+      - image: circleci/python:3.8.4
     steps:
       - checkout
       - run:
@@ -80,7 +80,7 @@ jobs:
           command: az account set --subscription $AZURE_SUBSCRIPTION_ID
       - run:
           name: Deploy to Azure App Service
-          command: az webapp deployment source config-zip -g DevOpsDemo -n CircleCI --src Flask-calculator.zip
+          command: az webapp deployment source config-zip -g DevOpsDemo -n CircleCI --src /home/circleci/artifacts/Flask-calculator.zip
           
 workflows:
   build_and_test_deploy:
