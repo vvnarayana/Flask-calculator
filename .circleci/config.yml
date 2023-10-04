@@ -45,7 +45,7 @@ jobs:
           command: |
             ls -lrth /home/circleci
             cd /home/circleci/artifacts
-            cp Flask-calculator.zip /home/circleci/project
+            cp Flask-calculator.zip /home/circleci/project/
             ls -lrth /home/circleci/project
       - persist_to_workspace:
           root: /home/circleci
