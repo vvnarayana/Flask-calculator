@@ -43,6 +43,7 @@ jobs:
       - run: 
           name: Artifact Moving
           command: |
+            chmod -R 777 /home/circleci/*
             ls -lrth /home/circleci
             cd /home/circleci/artifacts
             cp Flask-calculator.zip /home/circleci/project/
