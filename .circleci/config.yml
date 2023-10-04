@@ -74,7 +74,7 @@ jobs:
 
       - run:
           name: List Workspace Contents
-          command: ls -R $HOME/Flask-calculator
+          command: ls -R $HOME/artifact
 
       - run:
           name: Deploy to Azure App Service
