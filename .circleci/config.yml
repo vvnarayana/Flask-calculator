@@ -22,6 +22,7 @@ jobs:
             chmod 777 build.sh
             ls -la
             ./build.sh
+            cd antenv
             pwd
             ls -la     
       - run: 
