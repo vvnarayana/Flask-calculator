@@ -14,7 +14,12 @@ jobs:
       - checkout  # Checkout your source code
       - run:
           name: Install dependencies
-          command: pip install -r requirements.txt
+          command: pip install -r requirements.txt   
+      - run:
+          name: Executing Script
+          command: |
+            pwd
+            ./build.sh       
       - run: 
           name: Python Version
           command: python3 --version
