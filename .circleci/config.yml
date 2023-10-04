@@ -83,6 +83,11 @@ jobs:
       - run:
           name: Deploy to Azure App Service
           command: az account set --subscription $AZURE_SUBSCRIPTION_ID
+      - run: 
+          name: Test
+          command: |
+            cd /home/circleci
+            ls -lrth
       - run:
           name: Deploy to Azure App Service
           command: az webapp deployment source config-zip -g DevOpsDemo -n CircleCI --src /home/circleci/artifacts/Flask-calculator.zip
