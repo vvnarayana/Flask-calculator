@@ -96,7 +96,11 @@ jobs:
             ls -lrth
       - run:
           name: Deploy to Azure App Service
-          command: az webapp deployment source config-zip -g DevOpsDemo -n CircleCI --src $HOME/Flask-calculator
+          command: az webapp deployment source config-zip -g DevOpsDemo -n CircleCI --src $HOME/Flask-calculator.zip
+      - persist_to_workspace:
+          root: /home/circleci
+          paths:
+            - artifacts/Flask-calculator.zip 
           
 workflows:
   build_and_test_deploy:
