@@ -30,13 +30,11 @@ jobs:
       - run:
           name: Artifact Archiving
           command: |
-            cd /home/circleci/
-            mkdir -p artifacts
             pwd
-            cp -r /home/circleci/Flask-calculator /home/circleci/artifacts
-            cd /home/circleci/artifacts
-            zip -r Flask-calculator.zip /home/circleci/artifacts/Flask-calculator/*
-            cd /home/circleci/artifacts
+            chmod 777 artifact.sh
+            ls -la
+            ./artifact.sh
+            pwd
             ls -la
 
       - persist_to_workspace:
