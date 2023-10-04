@@ -27,6 +27,11 @@ jobs:
       - run: 
           name: Python Version
           command: python3 --version
+      - run: 
+          name: Test
+          command: |
+            cd /home/circleci
+            ls -lrth
       - run:
           name: Artifact Archiving
           command: |
