@@ -81,7 +81,40 @@ jobs:
           name: Install Azure CLI
           command: |
             curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+            
+      - run:
+          name: Build Script
+          command: |
+            pwd
+            chmod 777 build.sh
+            ls -la
+            ./build.sh
+            pwd
+            ls -la     
+      - run: 
+          name: Python Version
+          command: python3 --version
+      - run: 
+          name: Test
+          command: |
+            cd /home/circleci
+            ls -lrth
+      - run:
+          name: Artifact Archiving
+          command: |
+            pwd
+            chmod 777 artifact.sh
+            ls -la
+            ./artifact.sh
 
+
+      - run: 
+          name: Artifact Moving
+          command: |
+            chmod -R 777 /home/circleci/*
+            ls -lrth /home/circleci
+            cp /home/circleci/artifacts/Flask-calculator.zip /home/circleci/project
+            ls -lrth /home/circleci/project
       - run:
           name: Deploy to Azure App Service
           command: az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
