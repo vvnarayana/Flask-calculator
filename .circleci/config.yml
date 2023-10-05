@@ -47,29 +47,11 @@ jobs:
             chmod -R 777 /home/circleci/*
             ls -lrth /home/circleci
             cp /home/circleci/artifacts/Flask-calculator.zip /home/circleci/project
-            ls -lrth /home/circleci/project
+            ls -lrth /home/circleci/project/*
       - persist_to_workspace:
           root: /home/circleci
           paths:
             - artifacts/Flask-calculator.zip   
-      - run:
-          name: Install Azure CLI
-          command: |
-            curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-
-      - run:
-          name: Deploy to Azure App Service
-          command: az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
-      - run:
-          name: Deploy to Azure App Service
-          command: az account set --subscription $AZURE_SUBSCRIPTION_ID
-      - run: 
-          name: Test
-          command: |
-            ls -lrth /home/circleci
-      - run:
-          name: Deploy to Azure App Service
-          command: az webapp deployment source config-zip -g DevOpsDemo -n CircleCI --src $HOME/Flask-calculator.zip  
 
   run_tests:
     working_directory: ~/Flask-calculator
@@ -82,12 +64,43 @@ jobs:
       - run: 
            name: Run test
            command: pytest   
+  deploy:
+    working_directory: ~/Flask-calculator
+    docker:
+      - image: cimg/azure:2023.09
+    steps:
+      - checkout
+      - run:
+          name: Environment
+          command: |
+            cat /etc/os-release
+            sudo sed -i 's/stretch/buster/g' /etc/apt/sources.list
+            sudo apt-get update
+      - run:
+          name: Install Azure CLI
+          command: |
+            curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+            
 
+      - run:
+          name: Deploy to Azure App Service
+          command: az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+      - run:
+          name: Deploy to Azure App Service
+          command: az account set --subscription $AZURE_SUBSCRIPTION_ID
+
+      - run: 
+          name: Test
+          command: |
+            ls -lrth /home/circleci/project
+      - run:
+          name: Deploy to Azure App Service
+          command: az webapp deployment source config-zip -g DevOpsDemo -n CircleCI --src $HOME/Flask-calculator.zip
 
 workflows:
   build_and_test_deploy:
     jobs:
       - builds
       - run_tests
-      
+      - deploy
           
