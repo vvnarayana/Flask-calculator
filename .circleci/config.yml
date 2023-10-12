@@ -38,12 +38,7 @@ jobs:
             pwd
             chmod 777 artifact.sh
             ls -la
-            ./artifact.sh
-
-      - persist_to_workspace:
-          root: /home/circleci
-          paths:
-            - artifacts/Flask-calculator.zip   
+            ./artifact.sh  
 
   run_tests:
     working_directory: ~/Flask-calculator
