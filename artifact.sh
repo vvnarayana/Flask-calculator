@@ -4,7 +4,7 @@ cd /home/circleci/
 pwd
 #cp -r /home/circleci/Flask-calculator /home/circleci/artifacts
 #cd /home/circleci/artifacts
-zip -r Flask-calculator.zip /home/circleci/Flask-calculator/*
+zip -r /home/circleci/Flask-calculator/Flask-calculator.zip /home/circleci/Flask-calculator/*
 chmod 777 Flask-calculator.zip
 ls -la
 pwd
