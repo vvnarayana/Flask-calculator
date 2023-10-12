@@ -40,14 +40,6 @@ jobs:
             ls -la
             ./artifact.sh
 
-
-      - run: 
-          name: Artifact Moving
-          command: |
-            chmod -R 777 /home/circleci/*
-            ls -lrth /home/circleci
-            cp /home/circleci/artifacts/Flask-calculator.zip /home/circleci/project
-            ls -lrth /home/circleci/project/*
       - persist_to_workspace:
           root: /home/circleci
           paths:
@@ -77,17 +69,14 @@ jobs:
             sudo sed -i 's/stretch/buster/g' /etc/apt/sources.list
             sudo apt-get update
       - run:
-          name: Install Azure CLI
+          name: Azure App Service Deploy
           command: |
+            pwd
             curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-            
-
-      - run:
-          name: Deploy to Azure App Service
-          command: az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
-      - run:
-          name: Deploy to Azure App Service
-          command: az account set --subscription $AZURE_SUBSCRIPTION_ID
+            az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+            az account set --subscription $AZURE_SUBSCRIPTION_ID
+            az webapp deployment source config-zip -g $AZURE_RG_NAME -n $AZURE_WEBAPP_NAME --src *.zip
+            az webapp up -n $AZURE_WEBAPP_NAME -g $AZURE_RG_NAME
 
       - run: 
           name: Test
