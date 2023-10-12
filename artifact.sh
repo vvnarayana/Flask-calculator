@@ -1,10 +1,8 @@
 #!/bin/bash
 cd /home/circleci/
-#mkdir -p artifacts
 pwd
-#cp -r /home/circleci/Flask-calculator /home/circleci/artifacts
-#cd /home/circleci/artifacts
 zip -r /home/circleci/Flask-calculator/Flask-calculator.zip /home/circleci/Flask-calculator/*
 chmod 777 Flask-calculator.zip
+mv /home/circleci/Flask-calculator/Flask-calculator.zip /home/circleci/
 ls -la
 pwd
