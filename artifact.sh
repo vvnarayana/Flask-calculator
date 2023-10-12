@@ -7,3 +7,4 @@ cd /home/circleci/artifacts
 zip -r Flask-calculator.zip /home/circleci/artifacts/Flask-calculator/*
 chmod 777 Flask-calculator.zip
 ls -la
+pwd
