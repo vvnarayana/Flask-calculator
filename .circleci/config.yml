@@ -2,9 +2,10 @@ version: 2.1
 executors:
   python-executor:
     docker:
-      - image: cimg/python:3.8.4
+      - image: cimg/python:3.8.4      
 orbs:
     python: circleci/python@2.1.1
+    jira: circleci/jira@2.1.0
  
 jobs:
   builds:
@@ -38,7 +39,10 @@ jobs:
             pwd
             chmod 777 artifact.sh
             ls -la
-            ./artifact.sh  
+            ./artifact.sh
+      - jira/notify:
+          pipeline_id: << pipeline.id >>
+          pipeline_number: << pipeline.number >>      
 
   run_tests:
     working_directory: ~/Flask-calculator
@@ -83,7 +87,8 @@ jobs:
 workflows:
   build_and_test_deploy:
     jobs:
-      - builds
+      - builds:
+          context: Jira
       - run_tests
       - deploy
           
